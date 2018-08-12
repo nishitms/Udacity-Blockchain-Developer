@@ -34,6 +34,15 @@ function addDataToLevelDB(value) {
         });
 }
 
+
+// exports the variables and functions above so that other modules can use them
+module.exports.addLevelDBData = addLevelDBData;  
+module.exports.getLevelDBData = getLevelDBData;  
+module.exports.addDataToLevelDB = addDataToLevelDB;
+module.exports.level = level;  
+module.exports.chainDB = chainDB;  
+module.exports.db = db;  
+
 /* ===== Testing ==============================================================|
 |  - Self-invoking function to add blocks to chain                             |
 |  - Learn more:                                                               |
@@ -45,10 +54,11 @@ function addDataToLevelDB(value) {
 |     ( new block every 10 minutes )                                           |
 |  ===========================================================================*/
 
-
+/*
 (function theLoop (i) {
   setTimeout(function () {
     addDataToLevelDB('Testing data');
     if (--i) theLoop(i);
   }, 100);
 })(10);
+*/

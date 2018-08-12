@@ -3,7 +3,7 @@
 |  =========================================================*/
 
 const SHA256 = require('crypto-js/sha256');
-
+const levelSandbox = require('./levelSandbox.js')
 
 /* ===== Block Class ==============================
 |  Class with a constructor for block 			   |
@@ -43,6 +43,7 @@ class Blockchain{
     newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
     // Adding block object to chain
   	this.chain.push(newBlock);
+    levelSandbox.addLevelDBData(newBlock.height,newBlock);
   }
 
   // Get block height
