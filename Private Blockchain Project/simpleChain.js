@@ -49,15 +49,34 @@ class Blockchain{
 
   // Get block height
     getBlockHeight(){
-      return this.chain.length-1;
+      //return this.chain.length-1;
+      let countHeight = 0;
+      levelSandbox.db.createReadStream().on('data', function(data) {
+          //console.log(data.key, '=', JSON.parse(data.value))
+          countHeight++;
+        }).on('error', function(err) {
+            return console.log('Unable to read data stream!', err)
+        }).on('close', function() {
+          //console.log('Closing blockchain');
+          //addLevelDBData(i, value);
+          //console.log(countHeight)
+          return countHeight
+        });
+        //console.log(countHeight)
     }
 
     // get block
     getBlock(blockHeight){
       // return object as a single string
       //return JSON.parse(JSON.stringify(this.chain[blockHeight]));
-      //console.log(levelSandbox.getLevelDBData(blockHeight));
-      levelSandbox.getLevelDBData(blockHeight).then(function(value){console.log("Type = ", typeof value)});
+      //console.log("Type simple = ", typeof levelSandbox.getLevelDBData(blockHeight));
+      levelSandbox.getLevelDBData(blockHeight)
+      .then(function(value){
+      //console.log("Type = ", typeof value)
+      //console.log("Value = ", value)
+      return value
+      })
+      .catch(function(err){console.log('Not found!', err)})
     }
 
     // validate block

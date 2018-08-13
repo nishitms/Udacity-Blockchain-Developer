@@ -16,10 +16,7 @@ function addLevelDBData(key,value){
 
 // Get data from levelDB with key
 function getLevelDBData(key){
-  db.get(key)
-  //.then(function(value){console.log("Type = ", typeof value)})
-  //.then(function(value){return JSON.parse(JSON.stringify(value))})
-  //.catch(function(err){return console.log('Not found!', err)})
+    return db.get(key)
 }
 
 // Add data to levelDB with value
