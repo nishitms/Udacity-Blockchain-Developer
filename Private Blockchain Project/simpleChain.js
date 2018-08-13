@@ -41,9 +41,10 @@ class Blockchain{
     }
     // Block hash with SHA256 using newBlock and converting to a string
     newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
+    let newBlockJsonString = JSON.stringify(newBlock);
     // Adding block object to chain
   	this.chain.push(newBlock);
-    levelSandbox.addLevelDBData(newBlock.height,newBlock);
+    levelSandbox.addLevelDBData(newBlock.height,newBlockJsonString);
   }
 
   // Get block height
@@ -54,7 +55,9 @@ class Blockchain{
     // get block
     getBlock(blockHeight){
       // return object as a single string
-      return JSON.parse(JSON.stringify(this.chain[blockHeight]));
+      //return JSON.parse(JSON.stringify(this.chain[blockHeight]));
+      //console.log(levelSandbox.getLevelDBData(blockHeight));
+      levelSandbox.getLevelDBData(blockHeight).then(function(value){console.log("Type = ", typeof value)});
     }
 
     // validate block

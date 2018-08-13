@@ -13,12 +13,13 @@ function addLevelDBData(key,value){
   })
 }
 
+
 // Get data from levelDB with key
 function getLevelDBData(key){
-  db.get(key, function(err, value) {
-    if (err) return console.log('Not found!', err);
-    console.log('Value = ' + value);
-  })
+  db.get(key)
+  //.then(function(value){console.log("Type = ", typeof value)})
+  //.then(function(value){return JSON.parse(JSON.stringify(value))})
+  //.catch(function(err){return console.log('Not found!', err)})
 }
 
 // Add data to levelDB with value
@@ -34,9 +35,23 @@ function addDataToLevelDB(value) {
         });
 }
 
+function getAllLevelDBData() {
+    let i = 0;
+    db.createReadStream().on('data', function(data) {
+          console.log(data.key, '=', JSON.parse(data.value))
+          i++;
+        }).on('error', function(err) {
+            return console.log('Unable to read data stream!', err)
+        }).on('close', function() {
+          console.log('Closing blockchain');
+          //addLevelDBData(i, value);
+        });
+}
+
 
 // exports the variables and functions above so that other modules can use them
 module.exports.addLevelDBData = addLevelDBData;  
+module.exports.getAllLevelDBData = getAllLevelDBData;
 module.exports.getLevelDBData = getLevelDBData;  
 module.exports.addDataToLevelDB = addDataToLevelDB;
 module.exports.level = level;  
